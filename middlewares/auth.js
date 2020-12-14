@@ -4,7 +4,7 @@ const ErrorAutorization = require('../errors/error-autorization');
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
 
-  if (!authorization || !authorization.split(' ')[0] === 'Bearer') {
+  if (!authorization || authorization.split(' ')[0] !== 'Bearer') {
     next(new ErrorAutorization('Необходима авторизация'));
   }
   const token = authorization.split(' ')[1];

@@ -1,14 +1,25 @@
 const { celebrate, Joi } = require('celebrate');
+const validator = require('validator');
 
 module.exports.validationCreateArticle = celebrate({
   body: Joi.object().keys({
-    keyword: Joi.string().min(2).max(30),
-    title: Joi.string().min(2).max(30),
-    text: Joi.string().min(2).max(30),
-    date: Joi.string().min(2).max(30),
-    source: Joi.string().min(2).max(30),
-    link: Joi.string().pattern(/https?:\/\/(www\.)?[a-z0-9/\S+]#?/i),
-    image: Joi.string().pattern(/https?:\/\/(www\.)?[a-z0-9/\S+]#?/i),
+    keyword: Joi.string(),
+    title: Joi.string(),
+    text: Joi.string(),
+    date: Joi.string(),
+    source: Joi.string(),
+    link: Joi.string().custom((value, helpers) => {
+      if(validator.isURL(value)){
+        return value;
+      }
+      return helpers.message('Url не валидно!')
+    }),
+    image: Joi.string().custom((value, helpers) => {
+      if(validator.isURL(value)){
+        return value;
+      }
+      return helpers.message('Url не валидно!')
+    }),
   }),
 });
 module.exports.validationDeleteArticle = celebrate({
