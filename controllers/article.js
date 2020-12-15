@@ -1,6 +1,7 @@
 const Article = require('../models/article');
 const NotFoundError = require('../errors/not-found-error');
 const Forbidden = require('../errors/error-forbidden');
+const ErrorRequest = require('../errors/error-request');
 
 module.exports.getArticles = (req, res, next) => {
   Article.find({ owner: req.user._id })
@@ -30,7 +31,7 @@ module.exports.createArticle = (req, res, next) => {
         data: article,
       });
     })
-    .catch(next);
+    .catch(() => next(new ErrorRequest('С запросом что-то не так')));
 };
 
 module.exports.deleteArticle = (req, res, next) => {

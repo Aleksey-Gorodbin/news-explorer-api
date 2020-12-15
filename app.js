@@ -14,6 +14,8 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { routerUser } = require('./routes/user');
 const { router, routerDelete, routerCreate } = require('./routes/article');
 
+const { validationAuthorization } = require('./validation/autorization');
+
 const app = express();
 
 const { PORT = 3000, MONGODB = 'mongodb://localhost:27017/newsdb' } = process.env;
@@ -33,7 +35,7 @@ app.use(cors());
 app.use(requestLogger);
 app.post('/signup', validationRegister, register);
 app.post('/signin', validationLogin, login);
-app.use(auth);
+app.use(validationAuthorization, auth);
 app.use(routerUser);
 app.use(router);
 app.use(routerCreate);
