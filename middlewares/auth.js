@@ -6,6 +6,7 @@ module.exports = (req, res, next) => {
 
   if (!authorization || authorization.split(' ')[0] !== 'Bearer') {
     next(new ErrorAutorization('Необходима авторизация'));
+    return;
   }
   const token = authorization.split(' ')[1];
   let payload;

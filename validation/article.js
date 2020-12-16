@@ -9,16 +9,16 @@ module.exports.validationCreateArticle = celebrate({
     date: Joi.string().required(),
     source: Joi.string().required(),
     link: Joi.string().required().custom((value, helpers) => {
-      if(validator.isURL(value)){
+      if (validator.isURL(value)) {
         return value;
       }
-      return helpers.message('Url не валидно!')
+      return helpers.message('Url не валидно!');
     }),
     image: Joi.string().required().custom((value, helpers) => {
-      if(validator.isURL(value)){
+      if (validator.isURL(value)) {
         return value;
       }
-      return helpers.message('Url не валидно!')
+      return helpers.message('Url не валидно!');
     }),
   }),
 });
